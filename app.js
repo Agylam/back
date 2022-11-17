@@ -6,7 +6,7 @@ const app = express();
 
 const config = require("./config.json");
 
-app.use(express.static(__dirname));
+app.use(express.json())
 
 app.get("/auth", function(request, response) {
     fs.readFile(__dirname + "/users.json", function read(err, content) {
@@ -20,7 +20,7 @@ app.get("/auth", function(request, response) {
             response.send(JSON.stringify({ 'status': 'success', 'jwt': token }));
         } else {
             response.status(404);
-            response.send("{'status':'error','message':'Wrong email or password!'}");
+            response.send({ 'status': 'error', 'message': 'Wrong email or password!' });
         }
     });
 });
@@ -33,22 +33,28 @@ app.get("/schedule", function(request, response) {
     });
 });
 app.put("/schedule", function(request, response) {
-    jwt.verify(request.headers.authorization.split(' ')[1], config.jwtcode, function(err, decoded) {
-        if (err !== null) {
-
+    var token = request.headers.authorization.split(' ')[1];
+    jwt.verify(token, config.jwtcode, function(err, decoded) {
+        if (err === null) {
+            var user = decoded.data;
+            if (request.body.length === 7) {
+                fs.writeFile(__dirname + "/times.json", JSON.stringify(request.body), function(err) {
+                    if (err) {
+                        response.status(500);
+                        response.send({ 'status': 'error', 'message': err });
+                    } else {
+                        response.send(JSON.stringify({ 'status': 'success' }));
+                    }
+                });
+            } else {
+                response.status(400);
+                response.send({ 'status': 'error', 'message': 'Bad JSON' });
+            }
         } else {
-            response.status(404);
-            response.send({ 'status': 'error', 'message': 'JWT: ' + });
+            response.status(401);
+            response.send({ 'status': 'error', 'message': 'JWT: ' + JSON.stringify(err) });
         }
-        response.send({ err, decoded })
-            //console.log(decoded.foo) // bar
     });
-    // fs.readFile(__dirname + "/times.json", function read(err, content) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     response.send(content);
-    // });
 });
 
 app.listen(3000);

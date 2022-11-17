@@ -15,7 +15,7 @@ app.get("/auth", function(request, response) {
         var token = jwt.sign({ id: userid, name: users[userid].user }, 'shhhhh');
         response.send(JSON.stringify({ 'status': 'success', 'jwt': token }));
     } else {
-        response.status(400);
+        response.status(404);
         response.send("{'status':'error','message':'Wrong email or password!'}");
     }
 });

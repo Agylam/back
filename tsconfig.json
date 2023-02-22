@@ -4,12 +4,13 @@
     "module": "ES6",                                                                 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                                                                            
+    "strict": true,     
+    "moduleResolution":"node",                                                                                       
     "skipLibCheck": true
   },
   "sourceMap": true,
   "prestart": "npm run build",
   "emitDecoratorMetadata": true,
   "experimentalDecorators": true,
-  "moduleResolution":"node"
+  "include": ["src/*", "app.js","src"]
 }

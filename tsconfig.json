@@ -5,12 +5,15 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,            
     "strict": true,     
-    "moduleResolution":"node",                                                                                       
-    "skipLibCheck": true
+    "moduleResolution":"node",   
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,                                                                                    
+    "skipLibCheck": true,
+    "outDir": "build"
   },
   "sourceMap": true,
   "prestart": "npm run build",
+  "include": ["src/*","src"],   
   "emitDecoratorMetadata": true,
-  "experimentalDecorators": true,
-  "include": ["src/*", "app.js","src"]
+  "experimentalDecorators": true 
 }

@@ -1,0 +1,23 @@
+mimbol@notebook:~/AgylamWebBack$ nodemon
+[nodemon] 2.0.20
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): src/**/*
+[nodemon] watching extensions: ts
+[nodemon] starting `cross-env TS_NODE_TRANSPILE_ONLY=true NODE_ENV=development node --no-warnings --loader ts-node/esm --enable-source-maps --trace-warnings --inspect=0.0.0.0:9234 --nolazy src/index.ts`
+Debugger listening on ws://0.0.0.0:9234/a5405c23-d712-4920-8150-1428a8cdb042
+For help, see: https://nodejs.org/en/docs/inspector
+/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-modules-esm-resolve.js:366
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+CustomError: Cannot find module '/home/mimbol/AgylamWebBack/src/Controllers/UserController' imported from /home/mimbol/AgylamWebBack/src/index.ts
+    at finalizeResolution (/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-modules-esm-resolve.js:366:11)
+    at moduleResolve (/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-modules-esm-resolve.js:801:10)
+    at Object.defaultResolve (/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-modules-esm-resolve.js:912:11)
+    at /home/mimbol/AgylamWebBack/node_modules/ts-node/src/esm.ts:218:35
+    at entrypointFallback (/home/mimbol/AgylamWebBack/node_modules/ts-node/src/esm.ts:168:34)
+    at /home/mimbol/AgylamWebBack/node_modules/ts-node/src/esm.ts:217:14
+    at addShortCircuitFlag (/home/mimbol/AgylamWebBack/node_modules/ts-node/src/esm.ts:409:21)
+    at resolve (/home/mimbol/AgylamWebBack/node_modules/ts-node/src/esm.ts:197:12)
+    at nextResolve (node:internal/modules/esm/loader:163:28)
+    at ESMLoader.resolve (node:internal/modules/esm/loader:838:30)
+[nodemon] app crashed - waiting for file changes before starting...

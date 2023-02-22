@@ -9,11 +9,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,                                                                                    
     "skipLibCheck": true,
-    "outDir": "build"
+    "outDir": "build",
+    "sourceMap": true
   },
-  "sourceMap": true,
-  "prestart": "npm run build",
-  "include": ["src/*","src"],   
-  "emitDecoratorMetadata": true,
-  "experimentalDecorators": true 
+  "include": ["src"],
+  "prestart": "npm run start"
 }

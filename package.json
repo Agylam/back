@@ -12,12 +12,13 @@
     "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "reflect-metadata": "^0.1.13",
-    "routing-controllers": "^0.8.1"
+    "routing-controllers": "^0.8.1",
+    "stenodb": "^3.4.1"
   },
   "main": "app.js",
   "scripts": {
-    "build": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
-    "start": "tsc",
+    "dev": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

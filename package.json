@@ -1,7 +1,9 @@
 {
   "name": "agylamwebback",
   "version": "1.0.0",
+  "type": "module",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.17.0",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1"

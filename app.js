@@ -1,23 +1,23 @@
-const express = require("express");
-const fs = require("fs");
-const jwt = require('jsonwebtoken');
+import express from "express";
+import fs from "fs";
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
-const config = require("./config.json");
-
-app.use(express.json())
-
+app.use(express.json());
 app.get("/auth", function(request, response) {
     response.set('Access-Control-Allow-Origin', '*');
-    fs.readFile(__dirname + "/users.json", function read(err, content) {
+    fs.readFile("users.json", function read(err, content) {
         if (err) {
             throw err;
         }
         var users = JSON.parse(content);
         var userid = users.findIndex(obj => obj.user === request.query.email && obj.pass === request.query.password)
         if (userid !== -1) {
-            var token = jwt.sign({ data: { id: userid, name: users[userid].user } }, config.jwtcode, { expiresIn: config.time_session });
+            var token = jwt.sign({ data: { id: userid, name: users[userid].user } }, process.env.JWT_SECRET, { expiresIn: process.env.SESSION_TIME });
             response.send(JSON.stringify({ 'status': 'success', 'jwt': token }));
         } else {
             response.status(404);
@@ -37,7 +37,7 @@ app.get("/schedule", function(request, response) {
 app.put("/schedule", function(request, response) {
     response.set('Access-Control-Allow-Origin', '*');
     var token = request.headers.authorization.split(' ')[1];
-    jwt.verify(token, config.jwtcode, function(err, decoded) {
+    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
         if (err === null) {
             var user = decoded.data;
             if (request.body.length === 7) {
@@ -60,4 +60,6 @@ app.put("/schedule", function(request, response) {
     });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT, ()=>{
+    console.log("Server started on port " + process.env.PORT)
+});

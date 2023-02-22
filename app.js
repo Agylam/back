@@ -9,7 +9,6 @@ const app = express();
 
 app.use(express.json());
 app.get("/auth", function(request, response) {
-    response.set('Access-Control-Allow-Origin', '*');
     fs.readFile("users.json", function read(err, content) {
         if (err) {
             throw err;
@@ -26,7 +25,6 @@ app.get("/auth", function(request, response) {
     });
 });
 app.get("/schedule", function(request, response) {
-    response.set('Access-Control-Allow-Origin', '*');
     fs.readFile(__dirname + "/times.json", function read(err, content) {
         if (err) {
             throw err;
@@ -35,7 +33,6 @@ app.get("/schedule", function(request, response) {
     });
 });
 app.put("/schedule", function(request, response) {
-    response.set('Access-Control-Allow-Origin', '*');
     var token = request.headers.authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
         if (err === null) {

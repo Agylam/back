@@ -1,13 +1,14 @@
 import 'reflect-metadata';
 import { createExpressServer } from 'routing-controllers';
-import path from 'path';
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url'
 import dotenv from "dotenv";
 
+import {AuthController} from "./Controllers/AuthController";
+import {ScheduleController} from "./Controllers/ScheduleController";
+
 dotenv.config();
+
 createExpressServer({
-  controllers: [path.join(dirname(fileURLToPath(import.meta.url)) + '/Controllers/*.ts')],
+  controllers: [AuthController,ScheduleController],
 }).listen(process.env.PORT, ()=>{
   console.log("Server started on port " + process.env.PORT)
 });

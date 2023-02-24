@@ -1,6 +1,3 @@
-mimbol@notebook:~/AgylamWebBack$ ls
-app.js  node_modules  package.json       src    times.json     users.json
-build   nodemon.json  package-lock.json  tests  tsconfig.json
 mimbol@notebook:~/AgylamWebBack$ npm run dev
 
 > agylamwebback@1.0.0 dev
@@ -11,27 +8,16 @@ mimbol@notebook:~/AgylamWebBack$ npm run dev
 [nodemon] watching path(s): **/*.ts
 [nodemon] watching extensions: ts
 [nodemon] starting `node --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts`
-(node:12267) ExperimentalWarning: Custom ESM Loaders is an experimental feature and might change at any time
+(node:4728) ExperimentalWarning: Custom ESM Loaders is an experimental feature and might change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:12267) ExperimentalWarning: The Node.js specifier resolution flag is experimental. It could change or be removed at any time.
-/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-errors.js:46
-  const err = new Error(getErrRequireEsmMessage(filename, parentPath, packageJsonPath))
-              ^
-Error [ERR_REQUIRE_ESM]: Must use import to load ES Module: /home/mimbol/AgylamWebBack/src/Controllers/AuthController.ts
-require() of ES modules is not supported.
-require() of /home/mimbol/AgylamWebBack/src/Controllers/AuthController.ts from /home/mimbol/AgylamWebBack/node_modules/routing-controllers/util/importClassesFromDirectories.js is an ES module file as it is a .ts file whose nearest parent package.json contains "type": "module" which defines all .ts files in that package scope as ES modules.
-Instead change the requiring code to use import(), or remove "type": "module" from /home/mimbol/AgylamWebBack/package.json.
-
-    at createErrRequireEsm (/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-errors.js:46:15)
-    at assertScriptCanLoadAsCJSImpl (/home/mimbol/AgylamWebBack/node_modules/ts-node/dist-raw/node-internal-modules-cjs-loader.js:584:11)
-    at Object.require.extensions.<computed> [as .ts] (/home/mimbol/AgylamWebBack/node_modules/ts-node/src/index.ts:1610:5)
-    at Module.load (node:internal/modules/cjs/loader:1117:32)
-    at Function.Module._load (node:internal/modules/cjs/loader:958:12)
-    at Module.require (node:internal/modules/cjs/loader:1141:19)
-    at require (node:internal/modules/cjs/helpers:110:18)
-    at /home/mimbol/src/util/importClassesFromDirectories.ts:30:20
+(node:4728) ExperimentalWarning: The Node.js specifier resolution flag is experimental. It could change or be removed at any time.
+ReferenceError: e is not defined
+    at /home/mimbol/src/util/importClassesFromDirectories.ts:30:13
     at Array.map (<anonymous>)
-    at Object.importClassesFromDirectories (/home/mimbol/src/util/importClassesFromDirectories.ts:29:10) {
-  code: 'ERR_REQUIRE_ESM'
-}
+    at Object.importClassesFromDirectories (/home/mimbol/src/util/importClassesFromDirectories.ts:29:10)
+    at createExecutor (/home/mimbol/src/index.ts:160:35)
+    at createServer (/home/mimbol/src/index.ts:146:5)
+    at createExpressServer (/home/mimbol/src/index.ts:123:12)
+    at file:///home/mimbol/AgylamWebBack/src/index.ts:9:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:194:25)
 [nodemon] app crashed - waiting for file changes before starting...

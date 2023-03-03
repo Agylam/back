@@ -1,5 +1,8 @@
-import { JsonController, Post, Body } from 'routing-controllers';
+import { JsonController, Post, Body, HttpError, NotFoundError } from 'routing-controllers';
 import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface LoginBody {
   email: string;
@@ -8,21 +11,16 @@ interface LoginBody {
 
 @JsonController('/auth')
 export class AuthController {
-  private readonly JWT_SECRET: string = 'supersecretkey';
 
   @Post('/login')
-  async login(@Body() body: LoginBody) {
-    // Here you would check the user credentials against a database or other source
-    // For demonstration purposes, we will just create a fake user with a password of "password"
+  login(@Body() body: LoginBody) {
     const user = { email: body.email };
     if (body.password !== 'password') {
-      throw new Error('Incorrect password');
+      throw new NotFoundError(`User was not found.`);
     }
-
-    // If the user credentials are valid, generate a JWT token
-    const token = jwt.sign({ email: user.email }, this.JWT_SECRET, { expiresIn: '1h' });
-
-    // Return the token to the client
+    const token = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '1h' });
     return { token };
   }
+
 }
+

@@ -1,6 +1,18 @@
-import { JsonController, Post, Body, HttpError, NotFoundError } from 'routing-controllers';
-import jwt from 'jsonwebtoken';
+import { JsonController, Post, Body, NotFoundError } from 'routing-controllers';
+import { AsyncAdapter, NodeProvider } from '@stenodb/node'
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { UsersEntity } from "../Entities/UsersEntity"
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+
+
+const path = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'db')
+const adapter = new AsyncAdapter('users', UsersEntity)
+const provider = new NodeProvider({ path })
+const database = await provider.create(adapter)
+
 
 dotenv.config();
 
@@ -13,12 +25,11 @@ interface LoginBody {
 export class AuthController {
 
   @Post('/login')
-  login(@Body() body: LoginBody) {
-    const user = { email: body.email };
-    if (body.password !== 'password') {
-      throw new NotFoundError(`User was not found.`);
-    }
-    const token = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+  async login(@Body() body: LoginBody) {
+    await database.read();
+    let match : boolean = await bcrypt.compare(body.password, database.data?.getByEmail(body.email)?.password);
+    if (!match) throw new NotFoundError(`User was not found.`);
+    const token = await jwt.sign({ email: body.email }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
     return { token };
   }
 

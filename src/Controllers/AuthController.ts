@@ -12,6 +12,7 @@ const adapter = new AsyncAdapter("users", UsersEntity);
 const provider = new NodeProvider({ path });
 const database = await provider.create(adapter);
 
+database.read();
 dotenv.config();
 
 interface LoginBody {
@@ -23,7 +24,6 @@ interface LoginBody {
 export class AuthController {
     @Post("/login")
     async login(@Body() body: LoginBody) {
-        await database.read();
         let user = database.data?.getByEmail(body.email);
         if (!user) throw new NotFoundError(`User was not found.`);
         let match: boolean = await bcrypt.compare(body.password, user.password);

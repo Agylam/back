@@ -10,9 +10,9 @@ import bcrypt from "bcrypt";
 const path = resolve(dirname(fileURLToPath(import.meta.url)), "..", "db");
 const adapter = new AsyncAdapter("users", UsersEntity);
 const provider = new NodeProvider({ path });
-const database = await provider.create(adapter);
+const usersData = await provider.create(adapter);
 
-database.read();
+usersData.read();
 dotenv.config();
 
 interface LoginBody {
@@ -24,7 +24,7 @@ interface LoginBody {
 export class AuthController {
     @Post("/login")
     async login(@Body() body: LoginBody) {
-        let user = database.data?.getByEmail(body.email);
+        let user = usersData.data?.getByEmail(body.email);
         if (!user) throw new NotFoundError(`User was not found.`);
         let match: boolean = await bcrypt.compare(body.password, user.password);
         if (!match) throw new NotFoundError(`User was not found.`);

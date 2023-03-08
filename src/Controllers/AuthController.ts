@@ -29,7 +29,7 @@ export class AuthController {
         let match: boolean = await bcrypt.compare(body.password, user.password);
         if (!match) throw new NotFoundError(`User was not found.`);
         const token = await jwt.sign(
-            { email: body.email },
+            { email: user.email, fio: user.fio },
             process.env.JWT_SECRET as string,
             { expiresIn: "1h" }
         );

@@ -1,6 +1,7 @@
 {
     "users": [{
         "email": "qqq",
-        "password": "$2b$10$4V6BfusatvcBEdBFih1Yp.snRU4TBKVE/fZZuF2XB0ee/VcAFHUMC"
+        "password": "$2b$10$4V6BfusatvcBEdBFih1Yp.snRU4TBKVE/fZZuF2XB0ee/VcAFHUMC",
+        "fio": "Малыгин А.Е."
     }]
 }

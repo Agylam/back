@@ -18,8 +18,8 @@
     },
     "main": "app.js",
     "scripts": {
-        "dev": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
-        "build": "tsc",
+        "dev": "npx nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
+        "build": "npx tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

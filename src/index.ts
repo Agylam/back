@@ -10,9 +10,9 @@ dotenv.config();
 createExpressServer({
     controllers: [AuthController, ScheduleController],
     cors:{
-        origin: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: "Content-Type,Authorization",
+        origin: process.env.ORIGIN,
+        methods: process.env.METHODS,
+        allowedHeaders: process.env.ALLOWEDHEADERS,
     }
 }).listen(process.env.PORT, () => {
     console.log("Server started on port " + process.env.PORT);

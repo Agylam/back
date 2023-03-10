@@ -28,10 +28,10 @@ export class AuthController {
         if (!user) throw new NotFoundError(`User was not found.`);
         let match: boolean = await bcrypt.compare(body.password, user.password);
         if (!match) throw new NotFoundError(`User was not found.`);
-        const token = await jwt.sign(
-            { email: user.email, fullName: user.fullName },
+        const token = jwt.sign(
+            {email: user.email, fullName: user.fullName},
             process.env.JWT_SECRET as string,
-            { expiresIn: "1h" }
+            {expiresIn: "1h"}
         );
         return { token };
     }

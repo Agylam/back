@@ -2,8 +2,8 @@ import "reflect-metadata";
 import { createExpressServer } from "routing-controllers";
 import dotenv from "dotenv";
 
-import { AuthController } from "./Controllers/AuthController";
-import { ScheduleController } from "./Controllers/ScheduleController";
+import { AuthController } from "./Controllers/AuthController.js";
+import { ScheduleController } from "./Controllers/ScheduleController.js";
 
 dotenv.config();
 

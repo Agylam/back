@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { UserEntity } from "./UserEntity";
+import { UserEntity } from "./UserEntity.js";
 
 export class UsersEntity {
     @Type(() => UserEntity)

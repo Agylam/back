@@ -2,7 +2,7 @@ import { JsonController, Post, Body, NotFoundError } from "routing-controllers";
 import { AsyncAdapter, NodeProvider } from "@stenodb/node";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { UsersEntity } from "../Entities/UsersEntity";
+import { UsersEntity } from "../Entities/UsersEntity.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";

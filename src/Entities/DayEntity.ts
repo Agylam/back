@@ -8,4 +8,7 @@ export class DayEntity {
     constructor(day: LessonEntity[]) {
         this.day = day;
     }
+    setDay(day: LessonEntity[]){
+        this.day = day;
+    }
 }

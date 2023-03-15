@@ -1,14 +1,30 @@
-import { JsonController, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import {Body, JsonController, Post} from 'routing-controllers';
+import 'reflect-metadata'
+import {dirname, resolve} from 'node:path'
+import {fileURLToPath} from 'node:url'
+import {AsyncAdapter, NodeProvider} from '@stenodb/node'
+import {DayEntity} from "../Entities/DayEntity";
 
-@JsonController()
+interface ILesson {
+    start: string;
+    end: string;
+}
+
+@JsonController('/schedule')
 export class ScheduleController {
-    @Get('/user')
-    getAll() {
-        return {"a":"a","b":"b"};
+
+    @Post('/save')
+    saveToFile(@Body() data: ILesson[]) {
+        const path = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'db')
+        const initialData = new DayEntity(new ('John Doe'))
+        const adapter = new AsyncAdapter('users', Users, initialData)
+        const provider = new NodeProvider({path})
+        const db = await provider.create(adapter)
+
+        await db.read()
+        db.data?.users[0]?.addPost(new Post('Lorem ipsum'))
+        await db.write()
+        return {message: 'Data saved to file.'};
     }
 
-    @Get('/user/:id')
-    getOne(@Param('id') id: number) {
-        return {"a":"a","b":id};
-    }
 }

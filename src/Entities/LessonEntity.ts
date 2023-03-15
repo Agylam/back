@@ -1,18 +1,9 @@
 export class LessonEntity {
-    StartHour: number;
-    StartMinute: number;
-    StopHour: number;
-    StopMinute: number;
+    start: string;
+    end: string;
 
-    constructor(
-        StartHour: number,
-        StartMinute: number,
-        StopHour: number,
-        StopMinute: number
-    ) {
-        this.StartHour = StartHour;
-        this.StartMinute = StartMinute;
-        this.StopHour = StopHour;
-        this.StopMinute = StopMinute;
+    constructor(start: string, end: string) {
+        this.start = start;
+        this.end = end;
     }
 }

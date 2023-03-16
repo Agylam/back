@@ -1,5 +1,5 @@
-import { JsonController, Post, Body, NotFoundError } from "routing-controllers";
-import { AsyncAdapter, NodeProvider } from "@stenodb/node";
+import {JsonController, Post, Body, NotFoundError, BadRequestError} from "routing-controllers";
+import {AsyncAdapter, NodeProvider} from "@stenodb/node";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { UsersEntity } from "../Entities/UsersEntity.js";
@@ -15,15 +15,19 @@ const usersData = await provider.create(adapter);
 usersData.read();
 dotenv.config();
 
-interface LoginBody {
+interface ILoginBody {
     email: string;
     password: string;
 }
 
+function isLoginBody(object: any): object is ILoginBody {
+    return ('email' in object) && ('password' in object);
+}
 @JsonController("/auth")
 export class AuthController {
     @Post("/login")
-    async login(@Body() body: LoginBody) {
+    async login(@Body() body: ILoginBody) {
+        if (!isLoginBody(body)) new BadRequestError("Body isn't type LoginBody");
         let user = usersData.data?.getByEmail(body.email);
         if (!user) throw new NotFoundError(`User was not found.`);
         let match: boolean = await bcrypt.compare(body.password, user.password);
@@ -33,6 +37,6 @@ export class AuthController {
             process.env.JWT_SECRET as string,
             {expiresIn: "1h"}
         );
-        return { token };
+        return {token};
     }
 }

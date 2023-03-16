@@ -1,13 +1,13 @@
 {   
-  "compilerOptions": {          
-    "target": "ES2017",                                                                   
-    "module": "ES2022",                                                                 
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ES2022",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,            
-    "strict": true,     
-    "moduleResolution":"node",   
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,                                                                                    
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "outDir": "build",
     "sourceMap": true

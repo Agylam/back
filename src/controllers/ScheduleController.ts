@@ -3,9 +3,9 @@ import 'reflect-metadata'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {AsyncAdapter, NodeProvider} from '@stenodb/node'
-import {DaysEntity} from "../Entities/DaysEntity";
-import {LessonEntity} from "../Entities/LessonEntity";
-import {DayEntity} from '../Entities/DayEntity';
+import {DaysEntity} from "../entities/DaysEntity";
+import {LessonEntity} from "../entities/LessonEntity";
+import {DayEntity} from '../entities/DayEntity';
 
 interface ILesson {
     start: string;

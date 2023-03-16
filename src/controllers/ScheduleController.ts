@@ -37,7 +37,6 @@ export class ScheduleController {
     async list(@Param('id') id: number) {
         if (id < 0 || id > 6 || isNaN(id)) throw new BadRequestError("ID may be only 0-6 number");
         await db.read();
-        console.log(typeof (id))
         const day = db?.data?.getById(id)?.day;
         return day == undefined ? [] : day;
     }

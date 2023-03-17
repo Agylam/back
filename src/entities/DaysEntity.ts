@@ -1,6 +1,6 @@
 import {Type} from "class-transformer";
 import {DayEntity} from "./DayEntity.js";
-import {LessonEntity} from "./LessonEntity";
+import {LessonEntity} from "./LessonEntity.js";
 
 export class DaysEntity {
     @Type(() => DayEntity)

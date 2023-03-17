@@ -1,12 +1,10 @@
 import "reflect-metadata";
+import "dotenv/config";
 import {Action, createExpressServer} from "routing-controllers";
-import dotenv from "dotenv";
 
 import {verify} from 'jsonwebtoken';
 import {AuthController} from "./controllers/AuthController.js";
 import { ScheduleController } from "./controllers/ScheduleController.js";
-
-dotenv.config();
 
 createExpressServer({
     controllers: [AuthController, ScheduleController],

@@ -1,22 +1,11 @@
 import {BadRequestError, Body, CurrentUser, Get, JsonController, Param, Put} from 'routing-controllers';
 import 'reflect-metadata'
-import {dirname, resolve} from 'node:path'
-import {fileURLToPath} from 'node:url'
-import {AsyncAdapter, NodeProvider} from '@stenodb/node'
-import {DaysEntity} from "../entities/DaysEntity.js";
-import {DayEntity} from '../entities/DayEntity.js';
+import { days } from '../db.js';
 
 interface ILesson {
     start: string;
     end: string;
 }
-
-const path = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'db')
-const initialDays = Array.from(Array(7).keys()).map(v => new DayEntity([]));
-const initialData = new DaysEntity(initialDays)
-const adapter = new AsyncAdapter('days', DaysEntity, initialData);
-const provider = new NodeProvider({path})
-const db = await provider.create(adapter);
 
 interface User {
     email: string;
@@ -25,7 +14,6 @@ interface User {
 
 @JsonController('/schedule')
 export class ScheduleController {
-
     @Put('/:id')
     async save(@CurrentUser({required: true}) user: User, @Body() lessons: ILesson[], @Param('id') id: number) {
         console.log(user);
@@ -33,19 +21,18 @@ export class ScheduleController {
             return typeof (e.start) !== "string" || typeof (e.end) !== "string" || Object.keys(e).length !== 2;
         })
         if (notValid.length != 0) throw new BadRequestError("Element " + JSON.stringify(notValid[0]) + " isn't lesson");
-        await db.read()
-        await db.data?.setDay(id, lessons);
-        await db.write();
+        await days.read()
+        days.data?.setDay(id, lessons);
+        await days.write();
         return {message: 'Data saved to db.'};
     }
 
     @Get('/:id')
     async list(@Param('id') id: number) {
         if (id < 0 || id > 6 || isNaN(id)) throw new BadRequestError("ID may be only 0-6 number");
-        await db.read();
-        const day = db?.data?.getById(id)?.day;
-        console.log(JSON.stringify(db.data));
+        await days.read();
+        const day = days?.data?.getById(id)?.day;
+        console.log(JSON.stringify(days.data));
         return day == undefined ? [] : day;
     }
-
 }

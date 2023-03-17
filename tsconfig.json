@@ -1,4 +1,4 @@
-{   
+{
   "compilerOptions": {
     "target": "ES2017",
     "module": "ES2022",
@@ -8,10 +8,13 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "outDir": "build",
     "sourceMap": true
   },
-  "include": ["src","tests"],
-  "prestart": "npm run start"
+  "include": [
+    "src",
+    "tests"
+  ]
 }

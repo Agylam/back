@@ -3,8 +3,7 @@ import 'reflect-metadata'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {AsyncAdapter, NodeProvider} from '@stenodb/node'
-import {DaysEntity} from "../entities/DaysEntity";
-import {LessonEntity} from "../entities/LessonEntity";
+import {DaysEntity} from "../entities/DaysEntity.js";
 import {DayEntity} from '../entities/DayEntity.js';
 
 interface ILesson {

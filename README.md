@@ -3,7 +3,7 @@
 Для установки и запуска проекта введите:
 
 ```cmd
-npm i --legacy-peer-deps
+npm i
 npm run dev
 ```
  ---

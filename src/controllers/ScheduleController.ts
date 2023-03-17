@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url'
 import {AsyncAdapter, NodeProvider} from '@stenodb/node'
 import {DaysEntity} from "../entities/DaysEntity";
 import {LessonEntity} from "../entities/LessonEntity";
-import {DayEntity} from '../entities/DayEntity';
+import {DayEntity} from '../entities/DayEntity.js';
 
 interface ILesson {
     start: string;

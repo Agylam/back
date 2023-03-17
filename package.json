@@ -20,9 +20,9 @@
         "stenodb": "^4.0.1"
     },
     "scripts": {
-        "start": "npx tsc-watch --onSuccess \"node ./build/index.js\"",
-        "dev": "nodemon",
-        "build": "tsc"
+        "start": "npm build && node ./build/index.js",
+        "dev": "npx tsc-watch --onSuccess \"node ./build/index.js\"",
+        "build": "npx tsc"
     },
     "repository": {
         "type": "git",

@@ -7,7 +7,7 @@ import {AuthController} from "./controllers/AuthController.js";
 import { ScheduleController } from "./controllers/ScheduleController.js";
 
 createExpressServer({
-    controllers: [AuthController, ScheduleController],
+    controllers: [AuthController,ScheduleController],
     cors: {
         origin: process.env.CORS_ORIGIN,
         methods: process.env.CORS_METHODS,

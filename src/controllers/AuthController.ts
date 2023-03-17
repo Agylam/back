@@ -24,7 +24,7 @@ export class AuthController {
     @Post("/login")
     async login(@Body() body: ILoginBody) {
         if (false) new BadRequestError("Body isn't type LoginBody"); // TODO
-        usersData.read();
+        await usersData.read();
         let user = usersData.data?.getByEmail(body.email);
         if (!user) throw new NotFoundError(`User was not found.`);
         let match: boolean = await bcrypt.compare(body.password, user.password);

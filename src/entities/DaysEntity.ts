@@ -11,6 +11,7 @@ export class DaysEntity {
     }
 
     setDay(order: number, lessons: LessonEntity[]) {
+        console.log("days",order,this.days[order]);
         return this.days[order].setDay(lessons);
     }
 

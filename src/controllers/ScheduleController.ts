@@ -13,7 +13,8 @@ interface ILesson {
 }
 
 const path = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'db')
-const initialData = new DaysEntity([new DayEntity([new LessonEntity("10:00", "16:00")])])
+const initialDays = Array.from(Array(7).keys()).map(v => new DayEntity([]));
+const initialData = new DaysEntity(initialDays)
 const adapter = new AsyncAdapter('days', DaysEntity, initialData);
 const provider = new NodeProvider({path})
 const db = await provider.create(adapter);
@@ -44,6 +45,7 @@ export class ScheduleController {
         if (id < 0 || id > 6 || isNaN(id)) throw new BadRequestError("ID may be only 0-6 number");
         await db.read();
         const day = db?.data?.getById(id)?.day;
+        console.log(JSON.stringify(db.data));
         return day == undefined ? [] : day;
     }
 

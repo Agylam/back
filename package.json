@@ -20,7 +20,7 @@
         "stenodb": "^4.0.1"
     },
     "scripts": {
-        "start": "npm run build && node dist/index.js",
+        "start": "npx tsc-watch --onSuccess \"node ./dist/index.js\"",
         "dev": "nodemon",
         "build": "tsc"
     },

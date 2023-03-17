@@ -19,7 +19,8 @@
     },
     "scripts": {
         "start": "npm run build && node dist/index.js",
-        "dev": "nodemon",
+        "nodemon": "nodemon",
+        "dev": "npx tsc-watch --onSuccess \"node ./dist/index.js\"",
         "build": "tsc"
     },
     "repository": {

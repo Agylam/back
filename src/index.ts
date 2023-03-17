@@ -1,18 +1,31 @@
 import "reflect-metadata";
-import { createExpressServer } from "routing-controllers";
+import {Action, createExpressServer} from "routing-controllers";
 import dotenv from "dotenv";
 
-import { AuthController } from "./controllers/AuthController.js";
+import {verify} from 'jsonwebtoken';
+import {AuthController} from "./controllers/AuthController.js";
 import { ScheduleController } from "./controllers/ScheduleController.js";
 
 dotenv.config();
 
 createExpressServer({
     controllers: [AuthController, ScheduleController],
-    cors:{
+    cors: {
         origin: process.env.CORS_ORIGIN,
         methods: process.env.CORS_METHODS,
         allowedHeaders: process.env.CORS_ALLOWEDHEADERS,
+    },
+    currentUserChecker: async (action: Action) => {
+        const token = action.request.headers.authorization?.split(' ')[1];
+        if (token) {
+            try {
+                const decodedToken: any = verify(token, process.env.JWT_SECRET as string);
+                return decodedToken;
+            } catch (error) {
+                return null;
+            }
+        }
+        return null;
     }
 }).listen(process.env.PORT, () => {
     console.log("Server started on port " + process.env.PORT);

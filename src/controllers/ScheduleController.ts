@@ -1,4 +1,4 @@
-import {BadRequestError, Body, Get, JsonController, Param, Put} from 'routing-controllers';
+import {BadRequestError, Body, CurrentUser, Get, JsonController, Param, Put} from 'routing-controllers';
 import 'reflect-metadata'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
@@ -18,11 +18,17 @@ const adapter = new AsyncAdapter('days', DaysEntity, initialData);
 const provider = new NodeProvider({path})
 const db = await provider.create(adapter);
 
+interface User {
+    email: string;
+    fullName: string;
+}
+
 @JsonController('/schedule')
 export class ScheduleController {
 
     @Put('/:id')
-    async save(@Body() lessons: ILesson[], @Param('id') id: number) {
+    async save(@CurrentUser({required: true}) user: User, @Body() lessons: ILesson[], @Param('id') id: number) {
+        console.log(user);
         const notValid = lessons.filter(e => {
             return typeof (e.start) !== "string" || typeof (e.end) !== "string" || Object.keys(e).length !== 2;
         })

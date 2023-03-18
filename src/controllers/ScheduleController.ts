@@ -7,8 +7,8 @@ import {ILesson, ILessonDB} from "../interfaces/ILesson.js";
 const DB = new Database(process.env.DB_PATH as string);
 @JsonController('/schedule')
 export class ScheduleController {
-    @Put('/:id')
-    async save(@CurrentUser({required: true}) user: IUser, @Body() lessons: ILesson[], @Param('id') id: number) {
+    @Put('/:day')
+    async save(@CurrentUser({required: true}) user: IUser, @Body() lessons: ILesson[], @Param('day') day: number) {
         // console.log(user);
         // const notValid = lessons.filter(e => {
         //     return typeof (e.start) !== "string" || typeof (e.end) !== "string" || Object.keys(e).length !== 2;
@@ -17,7 +17,19 @@ export class ScheduleController {
         // await days.read()
         // days.data?.setDay(id, lessons);
         // await days.write();
-        return {message: 'Data saved to db.'};
+        const SqlQuery = "INSERT INTO schedule (day, start,end) VALUES " + lessons.map(e=>"(?,?,?) ").join();
+        const params =  lessons.map(e=>[day,e.start,e.end]).reduce(
+            (accumulator, currentValue) => accumulator.concat(currentValue),
+            []
+        ) as string[];
+        return DB.query("DELETE FROM schedule WHERE day = ?",[day+""]).then(()=>{
+            if(lessons.length != 0)
+                return DB.query(SqlQuery,params).then(()=>{
+                    return {message: 'Data saved to db.'};
+                })
+            else
+                return {message: 'Data saved to db.'};
+        });
     }
 
     @Get('/:day')

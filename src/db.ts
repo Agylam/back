@@ -1,45 +1,45 @@
-import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { AsyncAdapter, NodeProvider } from 'stenodb';
-import type { AsyncProvider, ClassEntity } from 'stenodb'
-import { UsersEntity } from './entities/UsersEntity.js';
-import { DaysEntity } from './entities/DaysEntity.js';
-import { DayEntity } from './entities/DayEntity.js';
-
-const pathToDatabase = resolve(dirname(fileURLToPath(import.meta.url)), "..", "db");
-
-class Databases {
-  private readonly provider: NodeProvider;
-  private databases = new Map<string, AsyncProvider<any>>();
-
-  constructor() {
-    this.provider = new NodeProvider({ path: pathToDatabase });
+import {open} from 'sqlite'
+import sqlite3 from 'sqlite3'
+export class Database{
+  fileName : string;
+  constructor(fileName:string) {
+    this.fileName = fileName;
+  }
+  private async open(fileName:string,onError:(error:any)=>void){
+    try{
+      const db = await open({
+        filename: fileName,
+        driver: sqlite3.Database
+      })
+      return db;
+    }catch (e:any){
+      onError(e);
+    }
   }
 
-  async createDatabase<T>(
-    name: string,
-    entity: ClassEntity<T>,
-    initialData?: T
-  ) {
-    const adapter = new AsyncAdapter(name, entity, initialData);
-    const db = await this.provider.create(adapter);
-    await db.read()
-    this.databases.set(name, db);
-    return db
-  }
 
-  getDatabase<T>(name: string) {
-    return this.databases.get(name) as AsyncProvider<T>
+  async query<T>(sql:string,params:string[]){
+    return new Promise<Awaited<T> | undefined>(async (resolve, reject)=>{
+      const db = await this.open(this.fileName,(error:any)=>{
+        reject(error);
+        return;
+      });
+      if(db == null) return;
+      const result = await db.get<T>(sql,params);
+      await db.close()
+      resolve(result);
+    })
+  }
+  async queryAll<T>(sql:string,params:string[]){
+    return new Promise<Awaited<T> | undefined>(async (resolve, reject)=>{
+      const db = await this.open(this.fileName,(error:any)=>{
+        reject(error);
+        return;
+      });
+      if(db == null) return;
+      const result = await db.all<T>(sql,params);
+      await db.close()
+      resolve(result);
+    })
   }
 }
-
-export const databases = new Databases()
-
-// users
-export const users = await databases.createDatabase('users', UsersEntity)
-
-// days
-const initialData = new DaysEntity(
-  Array.from(Array(7).keys()).map(v => new DayEntity([]))
-)
-export const days = await databases.createDatabase('days', DaysEntity, initialData)

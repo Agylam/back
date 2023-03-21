@@ -1,48 +1,34 @@
-import {open} from 'sqlite'
-import {Database} from 'sqlite3'
+import Bsqlite from 'better-sqlite3';
 
 export class DatabaseMim {
-  fileName: string;
+    db: Bsqlite.Database;
 
-  constructor(fileName: string) {
-    this.fileName = fileName;
-  }
-
-  private async open(fileName: string, onError: (error: any) => void) {
-    try {
-      const db = await open({
-        filename: fileName,
-        driver: Database
-      })
-      return db;
-    }catch (e:any){
-      onError(e);
+    constructor(fileName: string) {
+        this.db = new Bsqlite(fileName);
     }
-  }
 
+    async get<T>(sql: string, params: string[]) {
+        return new Promise<Awaited<T>>(async (resolve, reject) => {
+            if (this.db == null) reject("DB is null");
+            const result = await this.db.prepare(sql).get(params);
 
-  async query<T>(sql:string,params:string[]){
-    return new Promise<Awaited<T> | undefined>(async (resolve, reject)=>{
-      const db = await this.open(this.fileName,(error:any)=>{
-        reject(error);
-        return;
-      });
-      if(db == null) return;
-      const result = await db.get<T>(sql,params);
-      await db.close()
-      resolve(result);
-    })
-  }
-  async queryAll<T>(sql:string,params:string[]){
-    return new Promise<Awaited<T> | undefined>(async (resolve, reject)=>{
-      const db = await this.open(this.fileName,(error:any)=>{
-        reject(error);
-        return;
-      });
-      if(db == null) return;
-      const result = await db.all<T>(sql,params);
-      await db.close()
-      resolve(result);
-    })
-  }
+            resolve(result);
+        })
+    }
+
+    async query(sql: string, params: string[]) {
+        return new Promise<void>(async (resolve, reject) => {
+            if (this.db == null) reject("DB is null");
+            await this.db.prepare(sql).run(params);
+            resolve();
+        })
+    }
+
+    async all<T>(sql: string, params: string[]) {
+        return new Promise<Awaited<T>[]>(async (resolve, reject) => {
+            if (this.db == null) reject("DB is null");
+            const result = this.db.prepare(sql).all(params);
+            resolve(result);
+        })
+    }
 }

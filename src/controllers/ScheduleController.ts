@@ -1,10 +1,10 @@
 import {BadRequestError, Body, CurrentUser, Get, JsonController, NotFoundError, Param, Put} from 'routing-controllers';
 import 'reflect-metadata'
-import {Database} from "../db.js";
+import {DatabaseMim} from "../db.js";
 import {IUser} from "../interfaces/IUser.js";
 import {ILesson, ILessonDB} from "../interfaces/ILesson.js";
 
-const DB = new Database(process.env.DB_PATH as string);
+const DB = new DatabaseMim(process.env.DB_PATH as string);
 @JsonController('/schedule')
 export class ScheduleController {
     @Put('/:day')

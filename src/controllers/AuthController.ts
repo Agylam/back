@@ -1,14 +1,14 @@
 import {JsonController, Post, Body, NotFoundError} from "routing-controllers";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import {Database} from "../db.js";
+import {DatabaseMim} from "../db.js";
 import {IDBUser} from "../interfaces/IUser.js";
 interface ILoginBody {
     email: string;
     password: string;
 }
 
-const DB = new Database(process.env.DB_PATH as string);
+const DB = new DatabaseMim(process.env.DB_PATH as string);
 @JsonController("/auth")
 export class AuthController {
     @Post("/login")

@@ -1,15 +1,18 @@
 import {open} from 'sqlite'
-import sqlite3 from 'sqlite3'
-export class Database{
-  fileName : string;
-  constructor(fileName:string) {
+import {Database} from 'sqlite3'
+
+export class DatabaseMim {
+  fileName: string;
+
+  constructor(fileName: string) {
     this.fileName = fileName;
   }
-  private async open(fileName:string,onError:(error:any)=>void){
-    try{
+
+  private async open(fileName: string, onError: (error: any) => void) {
+    try {
       const db = await open({
         filename: fileName,
-        driver: sqlite3.Database
+        driver: Database
       })
       return db;
     }catch (e:any){

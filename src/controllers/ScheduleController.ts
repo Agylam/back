@@ -19,6 +19,7 @@ export class ScheduleController {
             (accumulator, currentValue) => accumulator.concat(currentValue),
             []
         ) as string[];
+        console.log(SqlQuery, params);
         return DB.query("DELETE FROM schedule WHERE day = ?",[day+""]).then(()=>{
             if(lessons.length != 0)
                 return DB.query(SqlQuery,params).then(()=>{

@@ -8,24 +8,23 @@ export class DatabaseMim {
     }
 
     async get<T>(sql: string, params: string[]) {
-        return new Promise<Awaited<T>>(async (resolve, reject) => {
+        return new Promise<Awaited<T>>((resolve, reject) => {
             if (this.db == null) reject("DB is null");
-            const result = await this.db.prepare(sql).get(params);
-
+            const result = this.db.prepare(sql).get(params)
             resolve(result);
         })
     }
 
     async query(sql: string, params: string[]) {
-        return new Promise<void>(async (resolve, reject) => {
+        return new Promise<void>( (resolve, reject) => {
             if (this.db == null) reject("DB is null");
-            await this.db.prepare(sql).run(params);
+            this.db.prepare(sql).run(params);
             resolve();
         })
     }
 
     async all<T>(sql: string, params: string[]) {
-        return new Promise<Awaited<T>[]>(async (resolve, reject) => {
+        return new Promise<Awaited<T>[]>((resolve, reject) => {
             if (this.db == null) reject("DB is null");
             const result = this.db.prepare(sql).all(params);
             resolve(result);

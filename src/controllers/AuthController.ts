@@ -15,7 +15,7 @@ export class AuthController {
     async login(@Body() body: ILoginBody) {
         return await DB.get<IDBUser>("SELECT * FROM users WHERE email = ?", [body.email]).then(async (user) => {
             if (!user) throw new NotFoundError(`User was not found.`);
-            let match: boolean = await bcrypt.compare(body.password, user.password);
+            const match: boolean = await bcrypt.compare(body.password, user.password);
             if (!match) throw new NotFoundError(`User was not found.`);
             const token = jwt.sign(
                 {id: user.id, email: user.email, fullName: user.fullName},

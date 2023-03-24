@@ -2,7 +2,7 @@ name: Deploy
 
 on:
     push:
-        branches: [ "master" ]
+        branches: [ "stage" ]
 
 jobs:
     build:
@@ -25,7 +25,7 @@ jobs:
                 uses: garygrossgarten/github-action-scp@release
                 with:
                     local: dist
-                    remote: /home/agylam
+                    remote: /home/github/agylam/back
                     host: ${{ secrets.HOST }}
                     username: ${{ secrets.SSH_USER }}
                     password: ${{ secrets.SSH_PASSWORD }}

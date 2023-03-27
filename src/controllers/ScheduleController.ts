@@ -1,4 +1,4 @@
-import {BadRequestError, Body, CurrentUser, Get, JsonController, NotFoundError, Param, Put} from 'routing-controllers';
+import {BadRequestError, Body, CurrentUser, Get, JsonController, Param, Put} from 'routing-controllers';
 import 'reflect-metadata'
 import {DatabaseMim} from "../db.js";
 import {IUser} from "../interfaces/IUser.js";
@@ -15,7 +15,7 @@ export class ScheduleController {
             return typeof (e.start) !== "string" || typeof (e.end) !== "string" || Object.keys(e).length !== 2;
         })
         if (notValid.length != 0) throw new BadRequestError("Element " + JSON.stringify(notValid[0]) + " isn't lesson");
-        const SqlQuery = "INSERT INTO schedule (day, start,end) VALUES " + lessons.map(e => "(?,?,?) ").join();
+        const SqlQuery = "INSERT INTO schedule (day, start,end) VALUES " + lessons.map(() => "(?,?,?) ").join();
         const params = lessons.map(e => [day, e.start, e.end]).reduce(
             (accumulator, currentValue) => accumulator.concat(currentValue),
             []

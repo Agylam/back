@@ -4,7 +4,7 @@ import {Action, createExpressServer} from "routing-controllers";
 
 import {verify} from 'jsonwebtoken';
 import {AuthController} from "./controllers/AuthController.js";
-import { ScheduleController } from "./controllers/ScheduleController.js";
+import {ScheduleController} from "./controllers/ScheduleController.js";
 
 createExpressServer({
     controllers: [AuthController,ScheduleController],
@@ -17,7 +17,7 @@ createExpressServer({
         const token = action.request.headers.authorization?.split(' ')[1];
         if (token) {
             try {
-                const decodedToken: any = verify(token, process.env.JWT_SECRET as string);
+                const decodedToken = verify(token, process.env.JWT_SECRET as string);
                 return decodedToken;
             } catch (error) {
                 return null;

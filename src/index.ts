@@ -5,9 +5,14 @@ import {Action, createExpressServer} from "routing-controllers";
 import {verify} from 'jsonwebtoken';
 import {AuthController} from "./controllers/AuthController.js";
 import {ScheduleController} from "./controllers/ScheduleController.js";
+import {NavLinksController} from "./controllers/NavLinksController.js";
 
 createExpressServer({
-    controllers: [AuthController,ScheduleController],
+    controllers: [
+        AuthController,
+        ScheduleController,
+        NavLinksController
+    ],
     cors: {
         origin: process.env.CORS_ORIGIN,
         methods: process.env.CORS_METHODS,

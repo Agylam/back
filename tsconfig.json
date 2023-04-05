@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-      "target": "ES2022",
-      "module": "ES2022",
-      "esModuleInterop": false,
-      "forceConsistentCasingInFileNames": true,
-      "strict": true,
-      "moduleResolution": "node16",
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "strictPropertyInitialization": false,
-      "skipLibCheck": true,
-      "outDir": "build",
-      "sourceMap": true
-  },
-  "include": [
-    "src"
-  ]
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }

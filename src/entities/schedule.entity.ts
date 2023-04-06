@@ -1,6 +1,7 @@
+// TODO: create module for schedules
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsString, IsOptional, IsEnum } from 'class-validator';
-import { User } from './user.entity';
+import { UserEntity } from '../users/users.entity';
 
 export enum Weekday {
   Monday = 'Monday',
@@ -29,9 +30,8 @@ export class Schedule {
   @Column()
   end: string;
 
-  @Column()
-  @ManyToOne(() => User, (user) => user.schedules)
-  creator: User;
+  @ManyToOne(() => UserEntity, (user) => user.schedules)
+  creator: UserEntity;
 }
 
 export class CreateScheduleDto {

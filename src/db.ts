@@ -10,7 +10,7 @@ export class DatabaseMim {
     async get<T>(sql: string, params: string[]) {
         return new Promise<Awaited<T>>((resolve, reject) => {
             if (this.db == null) reject("DB is null");
-            const result = this.db.prepare(sql).get(params)
+            const result = this.db.prepare(sql).get(params) as Awaited<T>;
             resolve(result);
         })
     }
@@ -26,7 +26,7 @@ export class DatabaseMim {
     async all<T>(sql: string, params: string[]) {
         return new Promise<Awaited<T>[]>((resolve, reject) => {
             if (this.db == null) reject("DB is null");
-            const result = this.db.prepare(sql).all(params);
+            const result = this.db.prepare(sql).all(params) as Awaited<T>[];
             resolve(result);
         })
     }

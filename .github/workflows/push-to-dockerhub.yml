@@ -3,6 +3,8 @@ name: Push
 on:
   push:
     branches: [ "cicd-test" ]
+    tags:
+      - '*'
 
 jobs:
   build:

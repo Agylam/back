@@ -26,4 +26,4 @@ jobs:
           file: docker/Dockerfile
           context: .
           push: true
-          tags: agylam/back:${{ env.GITHUB_REF_NAME }}
+          tags: agylam/back:${{ github.ref_name }}

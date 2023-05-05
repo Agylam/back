@@ -2,5 +2,5 @@ FROM node:18-alpine
 WORKDIR /app
 
 COPY . .
-RUN npm ci
+RUN npm i
 CMD ["node ./build/index.js"]

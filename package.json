@@ -18,7 +18,7 @@
         "routing-controllers": "^0.10.2"
     },
     "scripts": {
-        "start": "npm build && node ./build/index.js",
+        "start": "npm run build && node ./build/index.js",
         "dev": "npx tsc-watch --onSuccess \"node ./build/index.js\"",
         "build": "npx tsc",
         "lint": "npx eslint \"src/**/*.{js,ts}\"",
